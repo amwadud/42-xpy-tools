@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+from rich.tree import Tree
+from rich import print
+import os
+
+def make_tree(path, tree):
+    for entry in sorted(os.listdir(path)):
+        full = os.path.join(path, entry)
+        if os.path.isdir(full):
+            branch = tree.add(f"[bold magenta]{entry}/")
+            make_tree(full, branch)
+        else:
+            tree.add(entry)
+
+root = Tree(".")
+make_tree(".", root)
+print(root)
